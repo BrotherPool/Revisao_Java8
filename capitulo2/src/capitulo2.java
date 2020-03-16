@@ -1,9 +1,12 @@
+import com.sun.javafx.stage.FocusUngrabEvent;
+import org.omg.CORBA.COMM_FAILURE;
 import org.omg.PortableInterceptor.INACTIVE;
 
+import java.lang.reflect.Method;
 import java.util.*;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.ToIntFunction;
+import java.util.function.*;
+
+import static java.util.Comparator.comparing;
 
 public class capitulo2 {
     public static void main(String[] args) {
@@ -67,10 +70,10 @@ public class capitulo2 {
         Comparator<Usuario> comparator = Comparator.comparing(extraiNome);
         usuarios.sort(comparator);
         usuarios.sort(Comparator.comparing(u -> u.getNome()));
-        usuarios.forEach(u -> System.out.println(u.getNome()));
+        usuarios.forEach(u -> System.out.println(u.getNome()));*/
 
         //Auto boxing
-        Function<Usuario, Integer> extraiPontos = u -> u.getPontos();
+        /*Function<Usuario, Integer> extraiPontos = u -> u.getPontos();
         Comparator<Usuario> comparator = Comparator.comparing(extraiPontos);
         usuarios.sort(comparator);
         usuarios.sort(Comparator.comparing(u -> u.getPontos()));
@@ -82,5 +85,36 @@ public class capitulo2 {
         usuarios.sort(comparator);
         usuarios.sort(Comparator.comparingInt(u -> u.getPontos()));
         usuarios.forEach(u -> System.out.println(u.getNome()));*/
+
+        //Method References
+        //usuarios.forEach(Usuario::tornaModerador);
+        /*Function<Usuario,String> byName = Usuario::getNome;
+        //usuarios.sort(comparing(byName));
+        Comparator<Usuario> comparator = Comparator.comparingInt(Usuario::getPontos).thenComparing(Usuario::getNome);
+        usuarios.sort(comparator);
+        usuarios.sort(Comparator.comparingInt(Usuario::getPontos).thenComparing(Usuario::getNome));
+        usuarios.sort(Comparator.nullsLast(Comparator.comparing(Usuario::getNome)));
+        //Ao contrário
+        usuarios.sort(Comparator.comparing(Usuario::getPontos).reversed());
+        usuarios.forEach(u -> System.out.println(u.getNome()));*/
+
+        //Métodos de instancia
+        /*Usuario rodrigo = new Usuario("Rodrigo Turini",50);
+        Runnable bloco = rodrigo::tornaModerador;
+        bloco.run();
+        System.out.println(rodrigo.isModerador());*/
+        usuarios.forEach(System.out::println);
+
+        //Referenciar Construtores
+        /*Supplier<Usuario> criadorDeUsuarios = Usuario::new;
+        Usuario novo = criadorDeUsuarios.get();
+
+        Function<String,Usuario> criadorDeUsuarios = Usuario::new;
+        Usuario rodrigo = criadorDeUsuarios.apply("Rodrigo turini");*/
+
+        BiFunction<String,Integer,Usuario> criadorDeUsuarios = Usuario::new;
+        Usuario rodrigo = criadorDeUsuarios.apply("Rodrigo turini",50);
+
+
     }
 }

@@ -11,8 +11,20 @@ public class Usuario {
         this.moderador=false;
     }
 
+    public Usuario(String nome){
+        this.nome=nome;
+    }
+
+    public Usuario() {
+
+    }
+
     public String getNome() {
         return nome;
+    }
+
+    public String toString() {
+        return "Usuário "+ this.nome;
     }
 
     public int getPontos() {
